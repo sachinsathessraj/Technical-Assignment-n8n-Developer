@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Technical Assignment – n8n Developer
 
-## Getting Started
+A single-page contact experience built with Next.js 16 (App Router). Submissions are sent as JSON to an n8n webhook endpoint and the layout is Vercel-ready.
 
-First, run the development server:
+## Tech stack
+- Next.js 16 / React 19 (App Router, TypeScript)
+- Tailwind CSS v4 (via `@tailwindcss/postcss`)
+- Hosted on Vercel, backed by n8n webhook automation
 
+## Local development
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# open http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Environment variable:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Name | Description |
+| ---- | ----------- |
+| `NEXT_PUBLIC_N8N_WEBHOOK_URL` | n8n endpoint that receives the form JSON. Optional—defaults to the provided test URL. |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env.local` file when you want to override the fallback URL, then restart `npm run dev`.
 
-## Learn More
+## Deployment
+1. Push this repository to GitHub.
+2. In Vercel, import the repo and keep the root directory as `.` (project root).
+3. Add `NEXT_PUBLIC_N8N_WEBHOOK_URL` under Project Settings → Environment Variables.
+4. Deploy. Vercel will run `next build` and host the compiled site.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## n8n integration
+The form posts `{ name, email, message }` JSON to the configured webhook using `fetch`. n8n can parse the payload with the standard Webhook trigger node and route data to your automation flow.
