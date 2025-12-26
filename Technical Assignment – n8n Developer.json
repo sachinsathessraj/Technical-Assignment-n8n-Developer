@@ -1,0 +1,370 @@
+{
+  "name": "Technical Assignment – n8n Developer",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "8dad2050-23c2-4e89-abf8-d9cc7ab07303",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "319087db-5b4d-4371-bad7-458c078160f3",
+      "name": "Webhook",
+      "webhookId": "8dad2050-23c2-4e89-abf8-d9cc7ab07303"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  name: $json.body.name,\n  email: $json.body.email,\n  message: $json.body.message,\n  submittedAt: new Date().toISOString()\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "3ba9a6f6-efd7-427a-8026-013c2847a803",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1_5xw8xhDcuxamsEi1aDmdPw8dsbG49Bba_ZyrfLZiVo",
+          "mode": "list",
+          "cachedResultName": "Technical Assignment – n8n Developer",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_5xw8xhDcuxamsEi1aDmdPw8dsbG49Bba_ZyrfLZiVo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_5xw8xhDcuxamsEi1aDmdPw8dsbG49Bba_ZyrfLZiVo/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Submitted At": "={{ $json.submittedAt }}",
+            "Message": "={{ $json.message }}",
+            "Email": "={{ $json.email }}",
+            "Name": "={{ $json.name }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Message",
+              "displayName": "Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Submitted At",
+              "displayName": "Submitted At",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        416,
+        0
+      ],
+      "id": "91176e11-24bb-4937-b9e3-eaeaef1c3a8b",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "caUf7X930kbyjf55",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1088,
+        0
+      ],
+      "id": "fec66545-1772-4690-8b16-38b60738db12",
+      "name": "Wait",
+      "webhookId": "d2beda69-d194-4b2e-a79f-50e22c7b1b58"
+    },
+    {
+      "parameters": {
+        "jsCode": "const now = new Date();\n\nconst istTime = new Intl.DateTimeFormat('en-IN', {\n  timeZone: 'Asia/Kolkata',\n  dateStyle: 'full',\n  timeStyle: 'long'\n}).format(now);\n\nreturn [{\n  istTime\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1328,
+        0
+      ],
+      "id": "a7b85a70-249d-4741-91ed-688c3feea942",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "fromEmail": "sachinsatheesraj75@gmail.com",
+        "toEmail": "satheesrajangel202@gmail.com",
+        "subject": "=Following up on your request",
+        "html": "=<p>Hello {{ $('Append row in sheet').item.json.Name }},</p>\n\n<p>This is a quick follow-up.</p>\n\n<p><strong>Current Date & Time (IST):</strong><br/>\n{{ $json.istTime }}</p>\n\n<p>Thank you for reaching out.</p>\n\n<p>Regards,<br/>Support Team</p>\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        1520,
+        0
+      ],
+      "id": "85bb204a-2473-42a7-8b4e-ee3cada70537",
+      "name": "Send email",
+      "webhookId": "d35aef15-874e-4bf3-966a-8166429b9248",
+      "credentials": {
+        "smtp": {
+          "id": "LtsA56y7m7wDOcYS",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://openrouter.ai/api/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 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"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"deepseek/deepseek-chat\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are a professional customer support assistant.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"Reply politely to this message: {{ $json.Message }}\"\n    }\n  ]\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        624,
+        0
+      ],
+      "id": "03db0d85-ff4c-47f1-b405-c5d0847321c5",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "fromEmail": "sachinsatheesraj75@gmail.com",
+        "toEmail": "satheesrajangel202@gmail.com",
+        "subject": "test",
+        "html": "=<h3>Hello {{ $('Append row in sheet').item.json.Name }},</h3>\n\n<p>Thank you for contacting us.</p>\n\n<p><strong>Our response:</strong></p>\n<p>{{ $json.choices[0].message.content }}</p>\n\n<p>Best regards,<br/>Support Team</p>\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        848,
+        0
+      ],
+      "id": "4ad59e8b-68ac-4296-9f49-546a5a6366ee",
+      "name": "Send email1",
+      "webhookId": "f793364c-0132-4d42-adbd-232c047750f5",
+      "credentials": {
+        "smtp": {
+          "id": "LtsA56y7m7wDOcYS",
+          "name": "SMTP account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "satheesrajsachin.app.n8n.cloud",
+            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36",
+            "content-length": "74",
+            "accept": "*/*",
+            "accept-encoding": "gzip, br",
+            "accept-language": "en-GB,en-US;q=0.9,en;q=0.8,si;q=0.7",
+            "cdn-loop": "cloudflare; loops=1; subreqs=1",
+            "cf-connecting-ip": "2402:4000:131f:792d:25c5:9ff1:2a51:8d3c",
+            "cf-ew-via": "15",
+            "cf-ipcountry": "LK",
+            "cf-ray": "9b39afe510cc577a-SIN",
+            "cf-visitor": "{\"scheme\":\"https\"}",
+            "cf-worker": "n8n.cloud",
+            "content-type": "application/json",
+            "dnt": "1",
+            "origin": "https://n8nproduction.vercel.app",
+            "priority": "u=1, i",
+            "referer": "https://n8nproduction.vercel.app/",
+            "sec-ch-ua": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"macOS\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "cross-site",
+            "x-forwarded-for": "2402:4000:131f:792d:25c5:9ff1:2a51:8d3c, 172.70.143.203",
+            "x-forwarded-host": "satheesrajsachin.app.n8n.cloud",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "traefik-prod-users-gwc-108-67dcdbdbcd-p522h",
+            "x-is-trusted": "yes",
+            "x-real-ip": "2402:4000:131f:792d:25c5:9ff1:2a51:8d3c"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "name": "sachin",
+            "email": "sachinsatheesraj75@gmail.com",
+            "message": "test1"
+          },
+          "webhookUrl": "https://satheesrajsachin.app.n8n.cloud/webhook-test/8dad2050-23c2-4e89-abf8-d9cc7ab07303",
+          "executionMode": "test"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Send email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Send email1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send email1": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "761dac6c-ca84-4c6f-8878-5666b42a1ba4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d36376afcb4dd348d55accfa84f08b01272879bccf4c69633c7cb82816d879ce"
+  },
+  "id": "46kdH2VAiGjwaifx",
+  "tags": []
+}
