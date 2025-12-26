@@ -59,6 +59,14 @@ Form Logic: A custom JavaScript form captures user inputs: Name, Email, and Mess
 
 <img width="1680" height="962" alt="image" src="https://github.com/user-attachments/assets/8ca1a7b5-3f1d-4644-975b-ae356275a8c7" />
 
+# Delivers an immediate HTML-formatted reply to the user using the AI-generated content.
+
+<img width="1680" height="960" alt="image" src="https://github.com/user-attachments/assets/5fd89f8c-0a03-457f-8097-4e5add9854b1" />
+
+# Sends a second dynamic HTML email containing the IST timestamp.
+
+<img width="1680" height="961" alt="image" src="https://github.com/user-attachments/assets/2088b75d-da01-4387-bf0b-0bc537c39d34" />
+
 
 The workflow is structured to ensure data integrity and automated engagement:
 
